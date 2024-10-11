@@ -10,6 +10,9 @@ environment:
 dependencies:
   args: ^2.4.2
   http: ^1.2.2
+  lakos: ^2.0.4
+  #graphviz: ^9.0.0
+  path: ^1.8.0
 
 dev_dependencies:
   lints: ^4.0.0

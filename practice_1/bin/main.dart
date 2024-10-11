@@ -1,18 +1,12 @@
-import 'package:practice_1/features/core/data/debug/weather_repository_debug.dart';
-import 'package:practice_1/features/core/data/osm/osm_api.dart';
-import 'package:practice_1/features/core/data/osm/weather_repository_osm.dart';
+import 'package:practice_1/features/core/data/open_meteo/weather_repository_open_meteo.dart';
+import 'package:practice_1/features/core/data/overpass/overpass_api.dart';
+import 'package:practice_1/features/core/data/open_meteo/open_meteo_api.dart';
 import 'package:practice_1/features/core/presentation/app.dart';
 import 'dart:io';
 import 'package:lakos/lakos.dart';
 import 'package:path/path.dart' as path;
 import 'package:lakos/src/build_model.dart';
 import 'package:test/test.dart';
-
-const String version = '0.0.1';
-const String url = 'https://api.openweathermap.org';
-const String apiKey = 'f11a8d09666e4acbd56e3ecc1ccbe31b';
-
-
 
 // Функция для создания .dot файла
 void createDotFile(String projectPath, String outputFilePath) {
@@ -84,82 +78,19 @@ void createLakosGraph() async {
   var result = await Process.run('dot', ['-Tpng', 'project_graph.dot', '-o', 'project_graph1.png']);
 
   if (result.exitCode == 0) {
-    print('Graph generated and saved as project_graph1.png');
+    print('Graph generated and saved as project_graph2.png');
   } else {
     print('Error generating graph: ${result.stderr}');
   }
 }
 
+
 void main(List<String> arguments) async {
-  var app = App(WeatherRepositoryDebug());
+  var overpassApi = OverpassApi();
+  var openMeteoApi = OpenMeteoApi();
+  var weatherRepository = WeatherRepositoryOpenMeteo(overpassApi, openMeteoApi);
 
+  var app = App(weatherRepository);
   app.run();
-
-  /*
-  final projectPath = Directory.current.path;
-  final outputFilePath = path.join(projectPath, 'project_diagram.dot');
-  final pngFilePath = path.join(projectPath, 'project_diagram.png');
-
-  createDotFile(projectPath, outputFilePath);
-
-  await convertDotToPng(outputFilePath, pngFilePath);
-  */
-  //createLakosGraph();
-
+  createLakosGraph();
 }
-//разноцветные стрелочки
-/*
-  var model = buildModel(Directory('.'), ignoreGlob: 'test/**', showMetrics: true);
-
-  // Генерация графа в формате DOT с разноцветными стрелками
-  var dotOutput = generateColoredDot(model);
-
-  // Сохраняем граф в DOT-файл
-  var dotFile = File('project_graph.dot');
-  await dotFile.writeAsString(dotOutput);
-
-  // Проверяем наличие циклов зависимостей
-  if (!model.metrics!.isAcyclic) {
-    print('Dependency cycle detected.');
-  }
-
-  //Выводим метрики по SLOC
-  var nodesSortedBySloc = model.nodes.values.toList();
-  nodesSortedBySloc.sort((a, b) => a.sloc!.compareTo(b.sloc!));
-  for (var node in nodesSortedBySloc) {
-    print('${node.sloc}: ${node.id}');
-  }
-
-  // Конвертируем DOT в PNG, используя Graphviz (предполагается, что Graphviz установлен)
-  var result = await Process.run('dot', ['-Tpng', 'project_graph.dot', '-o', 'project_graph.png']);
-  if (result.exitCode != 0) {
-    print('Error generating PNG: ${result.stderr}');
-  } else {
-    print('Generated PNG successfully.');
-  }
-}
-
-String generateColoredDot(Model model) {
-  var buffer = StringBuffer();
-  buffer.writeln('digraph project_graph {');
-
-  // Добавляем узлы
-  for (var node in model.nodes.values) {
-    buffer.writeln('  "${node.id}" [label="${node.id}\\n(SLOC: ${node.sloc})"];');
-  }
-
-  // Добавляем ребра с разными цветами
-  var colors = ['red', 'green', 'blue', 'orange', 'purple', 'brown'];
-  var colorIndex = 0;
-  for (var edge in model.edges) {
-    var color = colors[colorIndex % colors.length];
-    buffer.writeln('  "${edge.from}" -> "${edge.to}" [color="$color"];');
-    colorIndex++;
-  }
-
-  buffer.writeln('}');
-  return buffer.toString();
-}
-
- */
-*/
