@@ -10,3 +10,4 @@
 ### Используемые API
 [Overpass API](https://overpass-api.de/) — используется для получения координат города.
 [Open-Meteo API](https://open-meteo.com/) — используется для получения данных о погоде.
+![graph_schema](practice_1/project_graph1.png)
