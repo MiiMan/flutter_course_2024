@@ -1,0 +1,11 @@
+digraph G {
+"practice_1.dart";
+"weather_repository_debug.dart";
+"osm_weather.dart";
+"osm_api.dart";
+"weather_repository_osm.dart";
+"search_query.dart";
+"search_response.dart";
+"weather_repository.dart";
+"app.dart";
+}
