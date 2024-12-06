@@ -1,16 +1,23 @@
-# practice_4
+# SuperEasyNoteProvider
 
-A new Flutter project.
 
-## Getting Started
+##### Самый лёгкий поставщик заметок на Flutter
 
-This project is a starting point for a Flutter application.
+## В приложении Использутся стейт-менеджер Provider:
 
-A few resources to get you started if this is your first Flutter project:
+### Структура приложения:
+Модель данных: Note - представляет заметку.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Менеджер состояния: NoteProvider - управление списком заметок.
+#### Экраны:
+Главный экран (NoteListScreen) - отображает список заметок.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Экран редактирования (NoteEditScreen) - добавление/редактирование заметки.
+
+#### Сохранение заметок
+В данной версии реализован простой способ с использованием SharedPreferences.
+
+### Видео-пример использования
+
+https://github.com/user-attachments/assets/63bf84aa-793c-4211-b353-c04ab4e96eaf
+
