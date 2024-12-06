@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:practice_4/presentation/counter_flow/counter_flow.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:practice_4/providers/note_provider.dart';
+import 'package:practice_4/screens/note_list_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  runApp(MyApp(prefs: prefs));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences prefs;
 
-  // This widget is the root of your application.
+  const MyApp({super.key, required this.prefs});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (_) => NoteProvider(prefs),
+      child: MaterialApp(
+        title: 'SuperEasyNoteProvider',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: NoteListScreen(),
       ),
-      home: CounterFlow(),
     );
   }
 }
