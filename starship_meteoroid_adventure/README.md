@@ -28,4 +28,5 @@
 
 ### Демонстрация:
 
+https://github.com/user-attachments/assets/bad3adc6-8aec-45c1-ac82-02795c949d70
 
